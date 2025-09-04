@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "tb_user")
@@ -17,6 +18,7 @@ public class User {
     @Column(unique = true)
     private String email;
     private String phone;
+    @Column(name = "birth_date")
     private LocalDate birtDate;
     private String password;
     @OneToMany(mappedBy = "client")
@@ -85,5 +87,18 @@ public class User {
 
     public List<Order> getOrders() {
         return orders;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+        return Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
